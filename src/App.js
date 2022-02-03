@@ -9,7 +9,7 @@ import PlaceDetails from './components/PlaceDetails/PlaceDetails';
 
 const App = () => {
   const [places, setPlaces] = useState([]);
-  const [coordinates, setCoordinates] = useState({});
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0});
   const [bounds, setBounds] = useState(null);
 
   useEffect(() => {
@@ -19,12 +19,14 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log("BOUNDS", bounds)
-    getPlacesData(bounds.sw, bounds.ne)
-      .then((data) => {
-        console.log(data);
-        setPlaces(data)
-      })
+    if(bounds && coordinates) {
+      console.log("BOUNDS", coordinates, bounds)
+      getPlacesData(bounds.sw, bounds.ne)
+        .then((data) => {
+          console.log(data);
+          setPlaces(data)
+        })
+    }
   }, [coordinates, bounds]);
 
   return (
