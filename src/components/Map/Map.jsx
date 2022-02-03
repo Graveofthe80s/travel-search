@@ -10,7 +10,7 @@ const Map = (props) => {
   const classes = useStyles();
   const isMobile = useMediaQuery('(min-width:600px)');
 
-  const coordinates = { lat: 0, lng: 0 }
+  const { setCoordinates, coordinates, setBounds } = props;
 
   return (
     <div className={ classes.mapContainer }>
@@ -21,7 +21,11 @@ const Map = (props) => {
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
         options={''}
-        onChange={''}
+        onChange={(e) => {
+          console.log(e)
+          setCoordinates({ lat: e.center.lat, lng: e.center.lng });
+          setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+        }}
         onChildClick={''}
       >
 
